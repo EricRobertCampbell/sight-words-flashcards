@@ -1,0 +1,51 @@
+#app {
+	min-width: 100vw;
+	min-height: 100vh;
+	box-sizing: border-box;
+	border: solid 1px black;
+}
+
+#card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-top: 8px;
+}
+
+#side {
+	height: 400px;
+	width: 400px;
+	border: solid 4px black;
+	border-radius: 12px;
+	box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.6);
+	transition: box-shadow 0.3s ease-in-out;
+	display: flex;
+	flex-direction: column;
+}
+#side:hover {
+	box-shadow: none;
+}
+#side p {
+	font-size: 5rem;
+	text-align: center;
+}
+
+button {
+	margin: 8px 4px 4px 4px;
+	padding: 4px;
+	background-color: lightcyan;
+	box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.3);
+	transition: box-shadow 0.3s ease-in-out;
+	font-size: 2rem;
+	border-radius: 8px;
+}
+button:hover {
+	box-shadow: none;
+}
+button.visible {
+	visibility: visible;
+}
+button.invisible {
+	visibility: hidden;
+}

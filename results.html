@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"
+		></script>
+		<script type="module" src="./script/results.js"></script>
+		<link rel="stylesheet" href="./styles/common.css" />
+		<link rel="stylesheet" href="./styles/results.css" />
+	</head>
+	<body>
+		<nav>
+			<ul>
+				<li>
+					<a href="/"> Study </a>
+				</li>
+				<li>
+					<a href="/results.html"> Results </a>
+				</li>
+			</ul>
+		</nav>
+
+		<div id="results">
+			<h2>
+				Results
+			</h2>
+			<div id="chart-container">
+				<canvas id="chart" height="500" width="500"></canvas>
+			</div>
+
+			<table id="results-table">
+				<thead>
+					<tr>
+						<th scope="row">
+							Card
+						</th>
+						<th scope="row">
+							# Successful
+						</th>
+						<th scope="row">
+							Total Attempts
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
