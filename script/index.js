@@ -1,4 +1,4 @@
-import { loadCards, saveCards } from "./utility.js";
+import { loadCards, saveCards, Result } from "./utility.js";
 
 const resetCard = (card, cards) => {
 	console.log("In resetCard");
@@ -19,15 +19,19 @@ const resetCard = (card, cards) => {
 		sideDisplay.innerHTML = `<p>${card.back}</p>`;
 		document.getElementById("no-button").onclick = () => {
 			console.log("No button onclick");
-			card.results.push(false);
+			const result = new Result(false);
+			console.log("About to push", result);
+			card.results.push(result);
 			setCardReadyState(getNewCard(cards), cards);
-			saveCards(cards)
+			saveCards(cards);
 		};
 		document.getElementById("yes-button").onclick = () => {
 			console.log("Yes button onclick");
-			card.results.push(true);
+			const result = new Result(true);
+			console.log("About to push", result);
+			card.results.push(result);
 			setCardReadyState(getNewCard(cards), cards);
-			saveCards(cards)
+			saveCards(cards);
 		};
 	};
 };
@@ -50,17 +54,17 @@ const getNewCard = (cards) => {
 	let lowestCard;
 	let currentLowestValue = 1; //set this high so it gets overwritten
 	cards.forEach((card) => {
-		const prob = card.getSample()
+		const prob = card.getSample();
 		if (prob < currentLowestValue) {
 			currentLowestValue = prob;
 			lowestCard = card;
 		}
-	})
+	});
 	return lowestCard;
 };
 
 window.onload = () => {
-	console.log('In index onload')
-	const cards = loadCards()
-	setCardReadyState(getNewCard(cards), cards)
-}
+	console.log("In index onload");
+	const cards = loadCards();
+	setCardReadyState(getNewCard(cards), cards);
+};
