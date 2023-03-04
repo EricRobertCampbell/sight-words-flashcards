@@ -81,6 +81,9 @@ window.onload = () => {
 					max: 1,
 					ticks: {
 						stepSize: 0.1,
+						callback: function (val) {
+							return `${val * 100}%`;
+						},
 					},
 				},
 			},
