@@ -16,7 +16,7 @@ const generateResults = (cards) => {
 	cards.forEach((card) => {
 		const row = document.createElement("tr");
 		const cardName = document.createElement("td");
-		cardName.innerHTML = `${card.front} &rarr; ${card.back}`;
+		cardName.innerHTML = card.generateResultsIdentifier();
 		const successes = document.createElement("td");
 		successes.innerText = card.getSuccesses();
 		const total = document.createElement("td");

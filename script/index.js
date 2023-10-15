@@ -13,10 +13,20 @@ const resetCard = (card, cards) => {
 		console.log("No sideDisplay found - returning");
 		return;
 	}
-	sideDisplay.innerHTML = `<p>${card.front}</p>`;
+	sideDisplay.innerHTML =
+		card.front.type === "text"
+			? `<p>${card.front.value}</p>`
+			: card.front.type === "audio"
+			? `<audio controls src=${card.front.value} />`
+			: `<p>${card.front.type}</p>`;
 	sideDisplay.onclick = () => {
 		setButtonVisibility(true);
-		sideDisplay.innerHTML = `<p>${card.back}</p>`;
+		sideDisplay.innerHTML =
+			card.back.type === "text"
+				? `<p>${card.back.value}</p>`
+				: card.back.type === "audio"
+				? `<audio controls src=${card.back.value} />`
+				: `<p>${card.back.type}</p>`;
 		document.getElementById("no-button").onclick = () => {
 			console.log("No button onclick");
 			const result = new Result(false);

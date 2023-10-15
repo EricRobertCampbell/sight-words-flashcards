@@ -72,6 +72,20 @@ export class Card {
 			results: this.results,
 		};
 	}
+	/**
+	 * Generate the identifier (name) for this card on the results page
+	 */
+	generateResultsIdentifier() {
+		return `${
+			this.front.type === "audio"
+				? `${this.back.value} (audio)`
+				: `${this.front.value} (text)`
+		} &rarr; ${
+			this.back.type === "audio"
+				? `${this.front.value} (audio)`
+				: `${this.back.value} (text)`
+		}`;
+	}
 }
 
 /**
@@ -95,16 +109,26 @@ export class Result {
 export const loadCards = () => {
 	const loadedCards = localStorage.getItem("cards");
 	const defaultCards = [
-		new Card({ front: 1, back: "Uno", slug: "uno" }),
-		new Card({ front: 2, back: "Dos", slug: "dos" }),
-		new Card({ front: 3, back: "Tres", slug: "tres" }),
-		new Card({ front: 4, back: "Cuatro", slug: "cuatro" }),
-		new Card({ front: 5, back: "Cinco", slug: "cinco" }),
-		new Card({ front: 6, back: "Seis", slug: "seis" }),
-		new Card({ front: 7, back: "Siete", slug: "siete" }),
-		new Card({ front: 8, back: "Ocho", slug: "ocho" }),
-		new Card({ front: 9, back: "Nueve", slug: "nueve" }),
-		new Card({ front: 10, back: "Diez", slug: "diez" }),
+		new Card({
+			front: { value: "the", type: "text" },
+			back: { value: "./media/the.m4a", type: "audio" },
+			slug: "the (text)",
+		}),
+		new Card({
+			front: { value: "./media/the.m4a", type: "audio" },
+			back: { value: "the", type: "text" },
+			slug: "the (audio)",
+		}),
+		new Card({
+			front: { value: "cat", type: "text" },
+			back: { value: "./media/cat.m4a", type: "audio" },
+			slug: "cat (text)",
+		}),
+		new Card({
+			back: { value: "cat", type: "text" },
+			front: { value: "./media/cat.m4a", type: "audio" },
+			slug: "cat (audio)",
+		}),
 	];
 	let toReturn = [];
 	try {
