@@ -1,4 +1,32 @@
 const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+
+export class AudioNote {
+	audioFile = "";
+	word = "";
+	slug = "";
+
+	constructor({ audioFile, word, slug }) {
+		this.slug = slug;
+		this.audioFile = audioFile;
+		this.word = word;
+	}
+
+	generateCards() {
+		return [
+			new Card({
+				front: { type: "audio", value: this.audioFile },
+				back: { type: "text", value: this.word },
+				slug: `${this.word} (audio)`,
+			}),
+			new Card({
+				front: { type: "text", value: this.word },
+				back: { type: "audio", value: this.audioFile },
+				slug: `${this.word} (text)`,
+			}),
+		];
+	}
+}
+
 export class Card {
 	dailyForgetting = 0.1; // how much is forgotten each day?
 
@@ -108,28 +136,31 @@ export class Result {
 
 export const loadCards = () => {
 	const loadedCards = localStorage.getItem("cards");
-	const defaultCards = [
-		new Card({
-			front: { value: "the", type: "text" },
-			back: { value: "./media/the.m4a", type: "audio" },
-			slug: "the (text)",
-		}),
-		new Card({
-			front: { value: "./media/the.m4a", type: "audio" },
-			back: { value: "the", type: "text" },
-			slug: "the (audio)",
-		}),
-		new Card({
-			front: { value: "cat", type: "text" },
-			back: { value: "./media/cat.m4a", type: "audio" },
-			slug: "cat (text)",
-		}),
-		new Card({
-			back: { value: "cat", type: "text" },
-			front: { value: "./media/cat.m4a", type: "audio" },
-			slug: "cat (audio)",
-		}),
+	const week1Words = [
+		"a",
+		"and",
+		"he",
+		"in",
+		"is",
+		"it",
+		"of",
+		"that",
+		"the",
+		"to",
+		"was",
+		"you",
 	];
+	const defaultNotes = week1Words.map(
+		(word) =>
+			new AudioNote({
+				word,
+				slug: word,
+				audioFile: `./media/week1/${word}.m4a`,
+			})
+	);
+	const defaultCards = defaultNotes.reduce((cards, note) => {
+		return [...cards, ...note.generateCards()];
+	}, []);
 	let toReturn = [];
 	try {
 		toReturn = loadedCards
