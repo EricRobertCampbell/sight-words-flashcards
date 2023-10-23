@@ -136,34 +136,58 @@ export class Result {
 
 export const loadCards = () => {
 	const loadedCards = localStorage.getItem("cards");
-	const week1Words = [
-		"a",
-		"and",
-		"he",
-		"in",
-		"is",
-		"it",
-		"of",
-		"that",
-		"the",
-		"to",
-		"was",
-		"you",
-	];
-	const defaultNotes = week1Words.map(
-		(word) =>
-			new AudioNote({
-				word,
-				slug: word,
-				audioFile: `./media/week1/${word}.m4a`,
-			})
+	const weekWords = {
+		1: [
+			"a",
+			"and",
+			"he",
+			"in",
+			"is",
+			"it",
+			"of",
+			"that",
+			"the",
+			"to",
+			"was",
+			"you",
+		],
+		2: [
+			"I",
+			"as",
+			"have",
+			"at",
+			"be",
+			"on",
+			"with",
+			"his",
+			"for",
+			"this",
+			"are",
+			"they",
+		],
+	};
+	const defaultNotes = Object.entries(weekWords).reduce(
+		(acc, [week, words]) => {
+			return [
+				...acc,
+				...words.map((word) => {
+					return new AudioNote({
+						word,
+						slug: word,
+						audioFile: `./media/week${week}/${word}.m4a`,
+					});
+				}),
+			];
+		},
+		[]
 	);
+	console.log({ defaultNotes });
 	const defaultCards = defaultNotes.reduce((cards, note) => {
 		return [...cards, ...note.generateCards()];
 	}, []);
 	let toReturn = [];
 	try {
-		toReturn = loadedCards
+		const parsedLoadedCards = loadedCards
 			? JSON.parse(loadedCards).map(
 					(data) =>
 						new Card({
@@ -175,7 +199,17 @@ export const loadCards = () => {
 								: [],
 						})
 			  )
-			: defaultCards;
+			: [];
+		// now merge these with any default cards
+		toReturn = [
+			...parsedLoadedCards,
+			...defaultCards.filter(
+				(card) =>
+					!parsedLoadedCards.some(
+						(parsedCard) => parsedCard.slug === card.slug
+					)
+			),
+		];
 		console.log({ toReturn });
 	} catch (e) {
 		console.error(`Error parsing data from local storage:`, e);
